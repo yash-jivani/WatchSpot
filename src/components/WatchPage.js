@@ -23,7 +23,7 @@ const WatchPage = () => {
         const {
             snippet: { description },
         } = items[0];
-        console.log(description);
+        // console.log(description);
         setVideoData(description);
     };
 
