@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeMenu } from "../utils/appSlice";
 import { useSearchParams } from "react-router-dom";
+import CommentsContainer from "./CommentsContainer";
 
 const WatchPage = () => {
     const [searchParams] = useSearchParams();
@@ -38,7 +39,8 @@ const WatchPage = () => {
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                 allowFullScreen
             ></iframe>
-            <p style={{whiteSpace: 'pre-wrap'}}>{videoData}</p>
+            <p style={{ whiteSpace: "pre-wrap" }}>{videoData}</p>
+            <CommentsContainer />
         </div>
     );
 };
