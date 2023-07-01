@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { closeMenu } from "../utils/appSlice";
 import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
+import { GOOGLE_API_KEY } from "../utils/constant";
 
 const WatchPage = () => {
     const [searchParams] = useSearchParams();
@@ -11,7 +12,8 @@ const WatchPage = () => {
 
     const dispatch = useDispatch();
     const [videoData, setVideoData] = useState(null);
-    const URL = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${vidId}&key=AIzaSyCoUE0i-j1kVKaozDeSob_KX7-24xQDSUo`;
+    const URL = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${vidId}&key=${GOOGLE_API_KEY}`;
+
     useEffect(() => {
         getDescription();
         dispatch(closeMenu());
@@ -21,10 +23,8 @@ const WatchPage = () => {
         let data = await fetch(URL);
         data = await data.json();
         const { items } = data;
-        const {
-            snippet: { description },
-        } = items[0];
-        // console.log(description);
+        const { snippet } = items[0];
+        const { description } = snippet;
         setVideoData(description);
     };
 

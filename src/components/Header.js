@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constant";
 import { cacheResults } from "../utils/searchSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -42,6 +43,10 @@ const Header = () => {
         // console.log(json[1]);
         // console.log("called: " + searchQuery);
     };
+    const navigate = useNavigate();
+    const handleSearch = () => {
+        navigate("/results/" + searchQuery);
+    };
 
     return (
         <div className='grid grid-flow-col p-2 border-b-2 border-black items-center'>
@@ -75,7 +80,12 @@ const Header = () => {
                         }}
                         className='w-1/2 border border-gray-400 p-2 rounded-l-full'
                     />
-                    <button className='rounded-r-full border border-gray-400 p-2'>
+                    <button
+                        className='rounded-r-full border border-gray-400 p-2'
+                        onClick={() => {
+                            return handleSearch(searchQuery);
+                        }}
+                    >
                         Search
                     </button>
                     {showSuggestion && suggestions.length > 0 && (
