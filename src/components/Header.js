@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constant";
+import { cacheResults } from "../utils/searchSlice";
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
-    const [showSuggestion, setShowSuggestion] = useState(false)
+    const [showSuggestion, setShowSuggestion] = useState(false);
 
     const dispatch = useDispatch();
     const toggleMenuHanlder = () => {
         dispatch(toggleMenu());
     };
 
+    const searchCache = useSelector((store) => store.search);
+
     useEffect(() => {
         const timer = setTimeout(() => {
-            return getSearchResults(searchQuery);
+            if (searchCache[searchQuery]) {
+                setSuggestions(searchCache[searchQuery]);
+            } else {
+                getSearchResults(searchQuery);
+            }
         }, 200);
         return () => {
             clearTimeout(timer);
@@ -26,6 +33,12 @@ const Header = () => {
         const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
         const json = await data.json();
         setSuggestions(json[1]);
+
+        dispatch(
+            cacheResults({
+                [searchQuery]: json[1],
+            })
+        );
         // console.log(json[1]);
         // console.log("called: " + searchQuery);
     };
@@ -54,8 +67,12 @@ const Header = () => {
                         placeholder='Search'
                         onChange={(e) => setSearchQuery(e.target.value)}
                         type='text'
-                        onFocus={()=>{setShowSuggestion(true)}}
-                        onBlur={()=>{setShowSuggestion(false)}}
+                        onFocus={() => {
+                            setShowSuggestion(true);
+                        }}
+                        onBlur={() => {
+                            setShowSuggestion(false);
+                        }}
                         className='w-1/2 border border-gray-400 p-2 rounded-l-full'
                     />
                     <button className='rounded-r-full border border-gray-400 p-2'>
@@ -66,7 +83,10 @@ const Header = () => {
                             {suggestions &&
                                 suggestions.map((currSuggestion, index) => {
                                     return (
-                                        <li key={index} className='mb-1 hover:bg-gray-100 cursor-pointer'>
+                                        <li
+                                            key={index}
+                                            className='mb-1 hover:bg-gray-100 cursor-pointer'
+                                        >
                                             {currSuggestion}
                                         </li>
                                     );
