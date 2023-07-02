@@ -4,6 +4,7 @@ import { closeMenu } from "../utils/appSlice";
 import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
 import { GOOGLE_API_KEY } from "../utils/constant";
+import LiveChat from "./LiveChat";
 
 const WatchPage = () => {
     const [searchParams] = useSearchParams();
@@ -29,18 +30,29 @@ const WatchPage = () => {
     };
 
     return (
-        <div className='px-5'>
-            <iframe
-                width='1200'
-                height='600'
-                src={"https://www.youtube.com/embed/" + vidId}
-                title='YouTube video player'
-                frameBorder='0'
-                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                allowFullScreen
-            ></iframe>
-            <p style={{ whiteSpace: "pre-wrap" }}>{videoData}</p>
-            <CommentsContainer />
+        <div className='px-5 flex'>
+            <div>
+                <iframe
+                    width='900'
+                    height='500'
+                    src={"https://www.youtube.com/embed/" + vidId}
+                    title='YouTube video player'
+                    frameBorder='0'
+                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                    allowFullScreen
+                ></iframe>
+                <p style={{ whiteSpace: "pre-wrap" }} className='w-2/3 my-5'>
+                    {videoData}
+                </p>
+                <CommentsContainer />
+            </div>
+            <div className="w-full  mx-1">
+                <h1 className="font-bold text-lg mx-3">Live Chat: 🚀</h1>
+                <div className='border border-black h-[473px] mx-3 w-[500px]'>
+                    <LiveChat />
+                </div>
+                
+            </div>
         </div>
     );
 };
