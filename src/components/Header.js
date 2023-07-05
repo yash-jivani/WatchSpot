@@ -57,12 +57,8 @@ const Header = () => {
                     src='https://img.favpng.com/16/8/3/hamburger-button-computer-icons-menu-png-favpng-WC4i2RFNSeQesWKV2GZBxwrCH.jpg'
                     alt='humberger menu'
                 />
-                <a href='/'>
-                    <img
-                        className='h-8 cursor-pointer'
-                        src='https://w7.pngwing.com/pngs/362/340/png-transparent-youtube-logo-streaming-media-youtube-logo-television-text-trademark.png'
-                        alt='Youtube logo'
-                    />
+                <a href='/' className="font-bold text-xl">
+                    WatchSpot
                 </a>
             </div>
             <div className='col-span-10 relative'>
