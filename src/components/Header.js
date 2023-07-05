@@ -57,7 +57,7 @@ const Header = () => {
                     src='https://img.favpng.com/16/8/3/hamburger-button-computer-icons-menu-png-favpng-WC4i2RFNSeQesWKV2GZBxwrCH.jpg'
                     alt='humberger menu'
                 />
-                <a href='/' className="font-bold text-xl">
+                <a href='/' className='font-bold text-xl'>
                     WatchSpot
                 </a>
             </div>
@@ -82,7 +82,7 @@ const Header = () => {
                             return handleSearch(searchQuery);
                         }}
                     >
-                        Search
+                        🔍
                     </button>
                     {showSuggestion && suggestions.length > 0 && (
                         <ul className='absolute bg-white w-1/2 p-2 rounded-lg'>
